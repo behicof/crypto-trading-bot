@@ -5,6 +5,8 @@
 - جمع‌آوری داده‌های بلادرنگ از صرافی‌های مختلف.
 - تحلیل داده‌ها و پیش‌بینی روند بازار.
 - اجرای معاملات خودکار.
+- حالت شبیه‌سازی برای تست ایمن.
+- پشتیبانی از متغیرهای محیطی برای تنظیمات.
 
 ## ساختار پروژه
 ```
@@ -12,30 +14,110 @@ crypto-trading-bot/
 ├── README.md
 ├── .gitignore
 ├── requirements.txt
-├── data/
+├── run_bot.py              # نقطه ورود اصلی
 ├── scripts/
-│   ├── store_data.py
-│   ├── trading_bot.py
-├── config/
-│   └── settings.py
-└── docs/
-    └── setup.md
+│   ├── store_data.py       # جمع‌آوری و ذخیره داده
+│   └── trading_bot.py      # ربات معاملاتی
+└── config/
+    └── settings.py         # تنظیمات پروژه
 ```
 
-## نحوه استفاده
-۱. مخزن را کلون کنید:
-   ```bash
-   git clone https://github.com/behicof/crypto-trading-bot.git
-   cd crypto-trading-bot
-   ```
+## نصب و راه‌اندازی
 
-۲. وابستگی‌ها را نصب کنید:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### ۱. کلون کردن مخزن
+```bash
+git clone https://github.com/behicof/crypto-trading-bot.git
+cd crypto-trading-bot
+```
 
-۳. اسکریپت‌ها را اجرا کنید:
-   ```bash
-   python scripts/store_data.py
-   python scripts/trading_bot.py
-   ```
+### ۲. نصب وابستگی‌ها
+```bash
+pip install -r requirements.txt
+```
+
+### ۳. اجرا
+
+#### حالت شبیه‌سازی (پیشنهادی برای شروع)
+```bash
+# اجرای ربات معاملاتی
+python run_bot.py --mode trade
+
+# جمع‌آوری داده
+python run_bot.py --mode collect
+
+# نمایش جزئیات بیشتر
+python run_bot.py --mode trade --verbose
+```
+
+#### حالت واقعی (نیاز به API کلیدها)
+```bash
+# تنظیم متغیرهای محیطی
+export BINANCE_API_KEY="your_api_key"
+export BINANCE_SECRET_KEY="your_secret_key"
+
+# اجرای واقعی
+python run_bot.py --mode trade --real
+```
+
+## تنظیمات
+
+می‌توانید تنظیمات را از طریق متغیرهای محیطی تغییر دهید:
+
+```bash
+export TRADING_PAIR="ETH/USDT"        # جفت ارز
+export TRADE_AMOUNT="0.002"           # مقدار معامله
+export TARGET_PROFIT="0.02"           # هدف سود (2%)
+export STOP_LOSS="0.01"               # حد ضرر (1%)
+export CHECK_INTERVAL="10"            # فاصله بررسی (ثانیه)
+```
+
+## امکانات
+
+### ✅ اجرای ربات معاملاتی
+- شبیه‌سازی معاملات با داده‌های واقعی
+- استراتژی خرید و فروش خودکار
+- مدیریت سود و ضرر
+- لاگ‌گیری کامل از فعالیت‌ها
+
+### ✅ جمع‌آوری داده
+- دریافت قیمت‌های لحظه‌ای
+- ذخیره‌سازی در پایگاه داده (اختیاری)
+- پشتیبانی از چندین جفت ارز
+
+### ✅ تنظیمات قابل تغییر
+- API کلیدهای صرافی
+- پارامترهای معاملاتی
+- تنظیمات پایگاه داده
+- حالت شبیه‌سازی/واقعی
+
+## هشدارها ⚠️
+
+- در حالت واقعی، ممکن است پول از دست بدهید
+- حتماً ابتدا در حالت شبیه‌سازی تست کنید
+- API کلیدهای خود را امن نگه دارید
+- معاملات کریپتو ریسک بالایی دارند
+
+## مثال‌های استفاده
+
+```bash
+# تست سریع در حالت شبیه‌سازی
+python run_bot.py
+
+# جمع‌آوری داده با جزئیات
+python run_bot.py --mode collect --verbose
+
+# اجرا با تنظیمات سفارشی
+TRADING_PAIR="BNB/USDT" TARGET_PROFIT="0.005" python run_bot.py
+```
+
+## رفع مشکل
+
+اگر با خطا مواجه شدید:
+
+1. مطمئن شوید که وابستگی‌ها نصب شده‌اند
+2. در حالت شبیه‌سازی شروع کنید
+3. متغیرهای محیطی را بررسی کنید
+4. فایل لاگ را بررسی کنید
+
+## مجوز
+این پروژه تحت مجوز MIT منتشر شده است.
